@@ -3,7 +3,7 @@ import EmotionBar from "./components/EmotionBar";
 import VADGraph from "./components/VADGraph";
 import "./App.css";
 
-const API = import.meta.env.VITE_API_URL || "http://localhost:8000";
+const API = import.meta.env.VITE_API_URL || "https://clngo-colorfulspeech.hf.space";
 
 export default function App() {
   const [text, setText] = useState("");
