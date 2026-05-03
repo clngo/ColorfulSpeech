@@ -10,6 +10,8 @@
 
 I've always been fascinated by how emotion is just as nuanced as different shades of color. Since sentiment analysis is possible with modern AI, I wanted to explore what kind of color is expressed from speech — mapping the journey from text → emotion → color. Not just "happy = yellow," but a continuous, research-backed translation through emotional geometry.
 
+It also just looks really cool. 
+
 ## What it does
 
 ColorfulSpeech takes any text input and:
@@ -31,7 +33,7 @@ ColorfulSpeech takes any text input and:
 - **Broken PyTorch install** — `torch._C` module error on first run required a full reinstall with the CPU-only wheel
 - **Hue wrapping** — naively averaging hue angles breaks at the 0°/360° boundary. Solved using circular mean via `atan2(sin, cos)`
 - **Color ambiguity** — red means both love and anger. Resolved by using all three VAD dimensions: valence sets brightness, so anger (negative) produces dark red and love (positive) produces bright red
-- **HuggingFace Spaces auth** — git credential caching blocked pushes; resolved by embedding the token directly in the remote URL
+
 
 ## Accomplishments that we're proud of
 
