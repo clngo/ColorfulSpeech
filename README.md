@@ -6,6 +6,14 @@
 
 ---
 
+## Hackathon Track
+
+**Creative Studio Track** — Unlock new creative range.
+
+ColorfulSpeech takes a creative spark — a feeling, a memory, a moment — and turns it into something you can see. It enables a new kind of creative workflow: writing as color composition. Every word choice, every emotional shift, produces a different visual output. It combines language, affective computing, and perceptual color science into something unexpected: a canvas that responds to how you feel, not just what you say.
+
+---
+
 ## Inspiration
 
 I've always been fascinated by how emotion is just as nuanced as different shades of color. Since sentiment analysis is possible with modern AI, I wanted to explore what kind of color is expressed from speech — mapping the journey from text → emotion → color. Not just "happy = yellow," but a continuous, research-backed translation through emotional geometry.
