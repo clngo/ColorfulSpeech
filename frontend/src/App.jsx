@@ -64,7 +64,7 @@ export default function App() {
           <textarea
             value={text}
             onChange={(e) => setText(e.target.value)}
-            placeholder="Enter text to analyze…"
+            placeholder="Enter text to analyze… (best results under ~400 words)"
             rows={4}
             onKeyDown={(e) => e.key === "Enter" && e.ctrlKey && analyze()}
           />
@@ -74,6 +74,7 @@ export default function App() {
               "I'm exhausted and completely overwhelmed. Everything feels like too much right now.",
               "The sunset was beautiful and quiet. I sat there for a long time, just breathing.",
               "I'm furious. They lied to me and I trusted them completely.",
+              "Today started rough — I spilled coffee, missed my bus, and got to work late. But then my manager pulled me aside and told me I'd been selected for the new project I'd been hoping for. By lunch I was laughing about the morning. Funny how fast things can turn around.",
             ].map((p) => (
               <button key={p} className="prompt-chip" onClick={() => setText(p)}>
                 {p.slice(0, 38)}…
