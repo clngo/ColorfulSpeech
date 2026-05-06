@@ -24,10 +24,10 @@ It also just looks really cool.
 
 ColorfulSpeech takes any text input and:
 
-1. Classifies it into a probability distribution across 7 emotions (joy, sadness, anger, fear, surprise, disgust, neutral)
-2. Maps those emotions to a continuous **Valence-Arousal-Dominance (VAD)** affect space
-3. Translates the VAD coordinates into an **HSL color** — hue from the emotional blend, saturation from arousal, brightness from valence
-4. Renders the result as an animated full-page color experience with emotion charts and a VAD scatter plot
+1. Classifies it into a probability distribution across **28 emotions** using the GoEmotions model (`SamLowe/roberta-base-go_emotions`) — including joy, love, admiration, grief, nervousness, remorse, and more
+2. Maps those emotions to a continuous **Valence-Arousal-Dominance (VAD)** affect space using NRC-VAD grounded vectors
+3. Translates the VAD coordinates into an **HSL color** — hue from the emotional blend (circular mean), saturation from arousal, brightness from valence
+4. Renders the result as an animated full-page color experience with emotion distribution chart, VAD progress bars with interpretations, VAD scatter plot, and a generated color card with hex value
 
 ## How we built it
 

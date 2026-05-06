@@ -10,21 +10,22 @@ import {
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip);
 
 const COLORS = {
-  joy: "#f5c518",
-  love: "#e91e8c",
-  gratitude: "#ff9800",
-  amusement: "#ffd54f",
-  excitement: "#ff6d00",
-  neutral: "#90a4ae",
-  surprise: "#00bcd4",
-  anger: "#f44336",
-  fear: "#7b1fa2",
+  // Yellows
+  joy: "#f5c518", excitement: "#ff6d00", amusement: "#ffd54f", optimism: "#ffb300", approval: "#c8e6c9",
+  // Pinks/magentas
+  love: "#e91e8c", caring: "#f06292", desire: "#e91e63", admiration: "#ce93d8", pride: "#ab47bc",
+  // Greens
+  gratitude: "#66bb6a", relief: "#a5d6a7",
+  // Cyans
+  surprise: "#00bcd4", curiosity: "#26c6da", realization: "#4dd0e1",
+  // Blues
+  neutral: "#90a4ae", confusion: "#0097a7", sadness: "#1565c0", disappointment: "#5c6bc0", remorse: "#3949ab", grief: "#283593",
+  // Reds
+  anger: "#f44336", annoyance: "#ef5350", disapproval: "#e53935",
+  // Purples
+  fear: "#7b1fa2", nervousness: "#8e24aa", embarrassment: "#ad1457",
+  // Olive
   disgust: "#558b2f",
-  sadness: "#1565c0",
-  disappointment: "#5c6bc0",
-  grief: "#283593",
-  embarrassment: "#ad1457",
-  confusion: "#0097a7",
 };
 
 export default function EmotionBar({ emotions }) {
@@ -32,20 +33,36 @@ export default function EmotionBar({ emotions }) {
   const data = {
     labels: sorted.map(([e]) => e),
     datasets: [{
-      data: sorted.map(([, v]) => v),
+      data: sorted.map(([, v]) => Math.round(v * 100)),
       backgroundColor: sorted.map(([e]) => COLORS[e] ?? "#888"),
       borderRadius: 4,
     }],
   };
   const options = {
-    indexAxis: "y",
-    plugins: { legend: { display: false } },
+    indexAxis: "x",
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: { label: (ctx) => `${ctx.parsed.y}%` },
+      },
+    },
     scales: {
-      x: { min: 0, max: 1, ticks: { color: "#ccc" }, grid: { color: "#333" } },
-      y: { ticks: { color: "#ccc" }, grid: { display: false } },
+      x: {
+        ticks: { color: "#ddd", font: { size: 13 }, maxRotation: 45, minRotation: 30 },
+        grid: { display: false },
+      },
+      y: {
+        min: 0, max: 100,
+        ticks: {
+          color: "#ccc",
+          font: { size: 13 },
+          callback: (v) => `${v}%`,
+        },
+        grid: { color: "#333" },
+      },
     },
     responsive: true,
     maintainAspectRatio: false,
   };
-  return <div style={{ height: 260 }}><Bar data={data} options={options} /></div>;
+  return <div style={{ height: 420 }}><Bar data={data} options={options} /></div>;
 }

@@ -9,28 +9,30 @@ import {
 
 ChartJS.register(LinearScale, PointElement, Tooltip, LineElement);
 
-// Draws quadrant labels directly on the canvas
-const quadrantLabels = {
-  id: "quadrantLabels",
-  afterDraw(chart) {
-    const { ctx, chartArea: { left, right, top, bottom } } = chart;
-    const midX = (left + right) / 2;
-    const midY = (top + bottom) / 2;
-    const labels = [
-      { text: "Excited",  x: right - 8,  y: top + 14,     align: "right" },
-      { text: "Angry",    x: left + 8,   y: top + 14,     align: "left"  },
-      { text: "Calm",     x: right - 8,  y: bottom - 8,   align: "right" },
-      { text: "Sad",      x: left + 8,   y: bottom - 8,   align: "left"  },
+const quadrantPlugin = {
+  id: "quadrantPlugin",
+  beforeDraw(chart) {
+    const { ctx, chartArea: { left, right, top, bottom }, scales } = chart;
+    const midX = scales.x.getPixelForValue(0);
+    const midY = scales.y.getPixelForValue(0.5);
+
+    const quads = [
+      { x: midX, y: top,  w: right-midX, h: midY-top,    color: "rgba(255,180,0,0.07)",  label: "Excited", lx: right-8, ly: top+18,   align: "right" },
+      { x: left, y: top,  w: midX-left,  h: midY-top,    color: "rgba(220,50,50,0.07)",  label: "Tense",   lx: left+8,  ly: top+18,   align: "left"  },
+      { x: midX, y: midY, w: right-midX, h: bottom-midY, color: "rgba(50,180,120,0.07)", label: "Calm",    lx: right-8, ly: bottom-8, align: "right" },
+      { x: left, y: midY, w: midX-left,  h: bottom-midY, color: "rgba(50,80,200,0.07)",  label: "Sad",     lx: left+8,  ly: bottom-8, align: "left"  },
     ];
+
     ctx.save();
-    ctx.font = "11px system-ui, sans-serif";
-    ctx.fillStyle = "rgba(255,255,255,0.2)";
-    labels.forEach(({ text, x, y, align }) => {
+    quads.forEach(({ x, y, w, h, color, label, lx, ly, align }) => {
+      ctx.fillStyle = color;
+      ctx.fillRect(x, y, w, h);
+      ctx.fillStyle = "rgba(255,255,255,0.18)";
+      ctx.font = "12px Inter, system-ui, sans-serif";
       ctx.textAlign = align;
-      ctx.fillText(text, x, y);
+      ctx.fillText(label, lx, ly);
     });
-    // faint crosshair lines
-    ctx.strokeStyle = "rgba(255,255,255,0.06)";
+    ctx.strokeStyle = "rgba(255,255,255,0.08)";
     ctx.lineWidth = 1;
     ctx.setLineDash([4, 4]);
     ctx.beginPath(); ctx.moveTo(midX, top); ctx.lineTo(midX, bottom); ctx.stroke();
@@ -38,8 +40,6 @@ const quadrantLabels = {
     ctx.restore();
   },
 };
-
-ChartJS.register(quadrantLabels);
 
 export default function VADGraph({ history, current }) {
   const histPoints = history.slice(0, -1).map((h) => ({
@@ -71,20 +71,20 @@ export default function VADGraph({ history, current }) {
     scales: {
       x: {
         min: -1, max: 1,
-        title: { display: true, text: "Valence", color: "#aaa" },
-        ticks: { color: "#ccc" },
-        grid: { color: "#333" },
+        title: { display: true, text: "Valence  (negative ← → positive)", color: "#aaa", font: { size: 13 } },
+        ticks: { color: "#ccc", font: { size: 12 } },
+        grid: { color: "#2a2a2a" },
       },
       y: {
         min: 0, max: 1,
-        title: { display: true, text: "Arousal", color: "#aaa" },
-        ticks: { color: "#ccc" },
-        grid: { color: "#333" },
+        title: { display: true, text: "Arousal  (calm ↓ ↑ energized)", color: "#aaa", font: { size: 13 } },
+        ticks: { color: "#ccc", font: { size: 12 } },
+        grid: { color: "#2a2a2a" },
       },
     },
     responsive: true,
     maintainAspectRatio: false,
   };
 
-  return <div style={{ height: 260 }}><Scatter data={data} options={options} /></div>;
+  return <div style={{ height: 380 }}><Scatter data={data} options={options} plugins={[quadrantPlugin]} /></div>;
 }
