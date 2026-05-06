@@ -1,7 +1,6 @@
 import { useState, useRef } from "react";
 import EmotionBar from "./components/EmotionBar";
 import VADGraph from "./components/VADGraph";
-import VADRadar from "./components/VADRadar";
 import "./App.css";
 
 const API = import.meta.env.VITE_API_URL || "https://clngo-colorfulspeech.hf.space";
